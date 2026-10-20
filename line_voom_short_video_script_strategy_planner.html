@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LINE VOOM Short Video Script & Strategy Planner</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        line: {
+                            50: '#e6f8e6',
+                            100: '#c2f0c2',
+                            500: '#00B900',
+                            600: '#009900',
+                            700: '#007a00',
+                            900: '#003d00',
+                        },
+                        dark: {
+                            bg: '#0F172A',
+                            card: '#1E293B',
+                            border: '#334155'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00B900;
+        }
+        
+        .toast-enter {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        .toast-enter-active {
+            transform: translateY(0);
+            opacity: 1;
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-line-500 selection:text-slate-950">
+
+    <!-- Header -->
+    <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-line-500/10 border border-line-500/30 flex items-center justify-center text-line-500 font-extrabold text-xl shadow-lg shadow-line-500/10">
+                    <i class="fab fa-line"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-lg sm:text-xl tracking-tight text-white flex items-center gap-2">
+                        LINE VOOM Planner <span class="bg-line-500/20 text-line-500 text-xs px-2 py-0.5 rounded-full border border-line-500/30">15s Pro Spec</span>
+                    </h1>
+                    <p class="text-xs text-slate-400 hidden sm:block">短影音爆款腳本與黃金 3 秒視覺規劃器</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <a href="#preview-section" class="sm:hidden bg-slate-800 hover:bg-slate-700 text-line-500 p-2 rounded-lg border border-slate-700 transition text-sm">
+                    <i class="fas fa-mobile-alt"></i> 預覽
+                </a>
+                <div class="hidden sm:flex items-center space-x-2 text-xs text-slate-400 bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-800">
+                    <span class="w-2 h-2 rounded-full bg-line-500 animate-pulse"></span>
+                    <span>VOOM 綠標演算法最佳化</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left Panel: Script Templates & Customizer (7 cols) -->
+        <section class="lg:col-span-7 space-y-6">
+            
+            <!-- Step 1: Select Template -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-base font-bold text-white flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-line-500 text-slate-950 flex items-center justify-center text-xs font-bold">1</span>
+                        選擇高轉化模板 (Select Template)
+                    </h2>
+                    <span class="text-xs text-slate-400">點擊代入腳本</span>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3" id="template-buttons">
+                    <button onclick="loadTemplate('acquisition')" id="tpl-btn-acquisition" class="p-3.5 rounded-xl border text-left transition relative overflow-hidden group bg-slate-950 border-line-500/50 shadow-md shadow-line-500/5">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <i class="fas fa-shield-alt text-line-500"></i>
+                            <span class="text-[10px] bg-slate-800 text-slate-300 px-1.5 py-0.5 rounded">商業獲客</span>
+                        </div>
+                        <h3 class="text-xs font-bold text-white group-hover:text-line-500 transition">防封號與自主獲客</h3>
+                        <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">痛點打擊，擺脫平台演算法綁架</p>
+                    </button>
+
+                    <button onclick="loadTemplate('linguistics')" id="tpl-btn-linguistics" class="p-3.5 rounded-xl border border-slate-800 bg-slate-950/60 hover:border-slate-700 text-left transition group">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <i class="fas fa-language text-purple-400"></i>
+                            <span class="text-[10px] bg-slate-800 text-slate-300 px-1.5 py-0.5 rounded">知識科普</span>
+                        </div>
+                        <h3 class="text-xs font-bold text-white group-hover:text-purple-400 transition">比較語言與古英文語源</h3>
+                        <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">顛覆常識的趣味語源小知識</p>
+                    </button>
+
+                    <button onclick="loadTemplate('monetization')" id="tpl-btn-monetization" class="p-3.5 rounded-xl border border-slate-800 bg-slate-950/60 hover:border-slate-700 text-left transition group">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <i class="fas fa-coins text-amber-400"></i>
+                            <span class="text-[10px] bg-slate-800 text-slate-300 px-1.5 py-0.5 rounded">數據變現</span>
+                        </div>
+                        <h3 class="text-xs font-bold text-white group-hover:text-amber-400 transition">零成本數據資產變現</h3>
+                        <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">無月租店面＋自動發貨管道</p>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Interactive Script Customizer -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-5">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <h2 class="text-base font-bold text-white flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-line-500 text-slate-950 flex items-center justify-center text-xs font-bold">2</span>
+                        15 秒腳本編輯器 (Script Customizer)
+                    </h2>
+                    <span class="text-xs text-line-500 font-mono bg-line-500/10 px-2 py-0.5 rounded border border-line-500/20">
+                        <i class="fas fa-clock mr-1"></i>Total 15s
+                    </span>
+                </div>
+
+                <!-- 0-3s Hook -->
+                <div class="space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                            <i class="fas fa-bolt"></i> 【0 - 3s】黃金鉤子 (Hook & Big Caption)
+                        </label>
+                        <span class="text-[11px] text-slate-400">前 3 秒強視覺＋大字幕</span>
+                    </div>
+                    <textarea id="script-hook" rows="2" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-100 focus:border-line-500 focus:ring-1 focus:ring-line-500 outline-none transition" oninput="updatePreview()"></textarea>
+                </div>
+
+                <!-- 3-12s Content -->
+                <div class="space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-bold text-blue-400 flex items-center gap-1.5">
+                            <i class="fas fa-align-left"></i> 【3 - 12s】核心內容 (Main Value & Evidence)
+                        </label>
+                        <span class="text-[11px] text-slate-400">精簡有力，解決痛點/給出答案</span>
+                    </div>
+                    <textarea id="script-body" rows="3" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-100 focus:border-line-500 focus:ring-1 focus:ring-line-500 outline-none transition" oninput="updatePreview()"></textarea>
+                </div>
+
+                <!-- 12-15s CTA -->
+                <div class="space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-bold text-line-500 flex items-center gap-1.5">
+                            <i class="fas fa-comment-dots"></i> 【12 - 15s】留言誘因與 CTA (Call To Action)
+                        </label>
+                        <span class="text-[11px] text-slate-400">引導留言以觸發演算法推薦</span>
+                    </div>
+                    <textarea id="script-cta" rows="2" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-100 focus:border-line-500 focus:ring-1 focus:ring-line-500 outline-none transition" oninput="updatePreview()"></textarea>
+                </div>
+
+                <!-- AI Video Generation Prompts & Tags Settings -->
+                <div class="pt-2 border-t border-slate-800/80 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-xs font-bold text-slate-300 block mb-1">AI 畫面生成提示詞 (Kling / Runway Prompt)</label>
+                        <input type="text" id="ai-prompt" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-slate-300 focus:border-line-500 outline-none" oninput="updatePreview()">
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-slate-300 block mb-1">VOOM 熱門標籤 (Hashtags)</label>
+                        <input type="text" id="voom-tags" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-line-500 font-mono focus:border-line-500 outline-none" oninput="updatePreview()">
+                    </div>
+                </div>
+
+                <!-- Quick Actions Bar -->
+                <div class="flex flex-wrap gap-2 pt-2">
+                    <button onclick="copyToClipboard('full-script')" class="flex-1 min-w-[140px] bg-line-500 hover:bg-line-600 text-slate-950 font-bold py-2.5 px-4 rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-lg shadow-line-500/20">
+                        <i class="fas fa-copy"></i> 複製完整文字腳本
+                    </button>
+                    <button onclick="copyToClipboard('ai-prompt')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 border border-slate-700">
+                        <i class="fas fa-robot text-purple-400"></i> 複製 AI 提示詞
+                    </button>
+                    <button onclick="copyToClipboard('voom-tags')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5 border border-slate-700">
+                        <i class="fas fa-hashtag text-line-500"></i> 複製標籤
+                    </button>
+                </div>
+            </div>
+
+            <!-- Best Practices & Checklist -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+                <h2 class="text-base font-bold text-white flex items-center gap-2">
+                    <i class="fas fa-tasks text-line-500"></i> LINE VOOM 流量爆發檢查清單 (Checklist)
+                </h2>
+                
+                <div class="space-y-2.5 text-xs" id="checklist">
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg bg-slate-950 border border-slate-800/80 cursor-pointer hover:border-slate-700 transition">
+                        <input type="checkbox" checked class="mt-0.5 accent-line-500 rounded w-4 h-4">
+                        <div>
+                            <span class="font-bold text-slate-200">【前 3 秒視覺強中斷】大字幕＋黃黑高對比配色</span>
+                            <p class="text-slate-400 text-[11px]">80% 以上 VOOM 用戶滑到影片時為靜音，前 3 秒必須依靠粗體大字幕抓住眼球。</p>
+                        </div>
+                    </label>
+
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg bg-slate-950 border border-slate-800/80 cursor-pointer hover:border-slate-700 transition">
+                        <input type="checkbox" checked class="mt-0.5 accent-line-500 rounded w-4 h-4">
+                        <div>
+                            <span class="font-bold text-slate-200">【留言誘爆點 (Comment Trigger)】指定數字/關鍵字</span>
+                            <p class="text-slate-400 text-[11px]">例如：「留言『+1』領取 PDF 懶人包」，留言爆發會直接推動系統加大冷啟動流量池。</p>
+                        </div>
+                    </label>
+
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg bg-slate-950 border border-slate-800/80 cursor-pointer hover:border-slate-700 transition">
+                        <input type="checkbox" class="mt-0.5 accent-line-500 rounded w-4 h-4">
+                        <div>
+                            <span class="font-bold text-slate-200">【LINE 官方帳號 (OA) 漏斗承接】Profile 連結防護</span>
+                            <p class="text-slate-400 text-[11px]">確保 VOOM 個人檔案區放置了指向你的主網域（Sovereign Domain）或 LINE OA 的一鍵加入連結。</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Right Panel: Phone Frame Real-time Previewer (5 cols) -->
+        <section class="lg:col-span-5 space-y-6" id="preview-section">
+            
+            <div class="sticky top-20 bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-2xl flex flex-col items-center">
+                
+                <div class="w-full flex items-center justify-between mb-4">
+                    <h2 class="text-sm font-bold text-slate-200 flex items-center gap-2">
+                        <i class="fas fa-mobile-alt text-line-500"></i> 9:16 VOOM 實時畫面預覽
+                    </h2>
+                    <div class="flex gap-1.5">
+                        <button onclick="setCaptionStyle('yellow')" class="px-2 py-1 rounded text-[11px] font-bold bg-amber-400 text-slate-950">黃黑字幕</button>
+                        <button onclick="setCaptionStyle('line')" class="px-2 py-1 rounded text-[11px] font-bold bg-line-500 text-slate-950">綠白字幕</button>
+                        <button onclick="setCaptionStyle('white')" class="px-2 py-1 rounded text-[11px] font-bold bg-white text-slate-950">經典白</button>
+                    </div>
+                </div>
+
+                <!-- Smartphone Mockup (9:16 Ratio) -->
+                <div class="relative w-[280px] h-[520px] bg-slate-950 rounded-[38px] border-[8px] border-slate-800 shadow-2xl overflow-hidden flex flex-col justify-between select-none">
+                    
+                    <!-- Phone Speaker Notch -->
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-4 bg-slate-800 rounded-b-xl z-30 flex justify-center items-center">
+                        <div class="w-8 h-1 bg-slate-900 rounded-full"></div>
+                    </div>
+
+                    <!-- Simulated Video Background (Dynamic Visual) -->
+                    <div id="video-bg" class="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-950 z-0 flex items-center justify-center transition-all duration-500">
+                        <!-- Abstract Visual Placeholder -->
+                        <div class="text-center p-4 opacity-30">
+                            <i id="preview-icon" class="fas fa-shield-alt text-6xl text-line-500 mb-2 animate-bounce"></i>
+                            <p class="text-[10px] text-slate-400">1080x1920 (9:16) Vertical Video</p>
+                        </div>
+                    </div>
+
+                    <!-- VOOM UI Overlay Top -->
+                    <div class="relative z-20 pt-6 px-4 flex justify-between items-center text-xs text-white/80 bg-gradient-to-b from-black/80 to-transparent pb-6">
+                        <span class="font-bold tracking-wider text-[11px]">LINE VOOM</span>
+                        <div class="flex gap-3">
+                            <i class="fas fa-search"></i>
+                            <i class="fas fa-ellipsis-v"></i>
+                        </div>
+                    </div>
+
+                    <!-- Center High-Impact Caption Area -->
+                    <div class="relative z-20 px-4 text-center my-auto w-full">
+                        <div id="caption-box" class="inline-block bg-amber-400 text-slate-950 font-extrabold text-base px-3 py-2 rounded-lg shadow-2xl transform leading-snug border-2 border-slate-950 max-w-[240px]">
+                            <span id="preview-caption-text">前 3 秒強視覺鉤子文字載入中...</span>
+                        </div>
+                        <div id="preview-subtext" class="mt-2 text-[11px] text-white/90 bg-black/60 backdrop-blur-sm px-2.5 py-1 rounded-full inline-block max-w-[220px] truncate">
+                            點擊左側腳本進行編輯...
+                        </div>
+                    </div>
+
+                    <!-- VOOM Right Action Sidebar -->
+                    <div class="absolute right-3 bottom-20 z-20 flex flex-col items-center gap-4 text-white/90">
+                        <div class="flex flex-col items-center">
+                            <div class="w-9 h-9 rounded-full bg-slate-800/80 border border-slate-700 flex items-center justify-center text-line-500 text-sm">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <span class="text-[10px] mt-0.5">2.4k</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-9 h-9 rounded-full bg-slate-800/80 border border-slate-700 flex items-center justify-center text-amber-400 text-sm">
+                                <i class="fas fa-comment-dots"></i>
+                            </div>
+                            <span class="text-[10px] mt-0.5" id="preview-comment-count">188</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-9 h-9 rounded-full bg-slate-800/80 border border-slate-700 flex items-center justify-center text-slate-200 text-sm">
+                                <i class="fas fa-share"></i>
+                            </div>
+                            <span class="text-[10px] mt-0.5">分享</span>
+                        </div>
+                    </div>
+
+                    <!-- VOOM Bottom Profile & Caption Info -->
+                    <div class="relative z-20 p-4 bg-gradient-to-t from-black/95 via-black/60 to-transparent pt-8 text-left">
+                        <div class="flex items-center gap-2 mb-1.5">
+                            <div class="w-7 h-7 rounded-full bg-line-500 flex items-center justify-center text-slate-950 font-bold text-xs">
+                                OA
+                            </div>
+                            <span class="text-xs font-bold text-white">去中心化品牌官號</span>
+                            <span class="text-[10px] bg-line-500/20 text-line-500 px-1.5 py-0.2 rounded border border-line-500/30">+追蹤</span>
+                        </div>
+                        <p id="preview-bottom-body" class="text-[11px] text-slate-200 line-clamp-2 mb-1">
+                            【3-12s】核心內容展示區域...
+                        </p>
+                        <p id="preview-bottom-tags" class="text-[10px] text-line-500 font-mono truncate">
+                            #防封號 #自主獲客 #LINEVOOM
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- Simulation Audio Button -->
+                <button onclick="playTTSPreview()" class="mt-4 w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium py-2 rounded-xl text-xs border border-slate-700 transition flex items-center justify-center gap-2">
+                    <i class="fas fa-volume-up text-line-500"></i> 模擬 ElevenLabs 語音朗讀試聽
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-line-500 text-slate-950 font-bold px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-2 text-xs z-50 transform translate-y-20 opacity-0 transition-all duration-300">
+        <i class="fas fa-check-circle text-base"></i>
+        <span id="toast-message">已成功複製到剪貼簿！</span>
+    </div>
+
+    <script>
+        // Pre-configured 15s High-Converting Templates
+        const templates = {
+            acquisition: {
+                hook: "還在幫平台打工？帳號被封你就一無所有！",
+                body: "告別平台演算法綁架！教你用 $0 成本打造 GitHub + 靜態城堡獲客鏈條。直接把客戶名單握在自己手裡，再也不怕無預警封號！",
+                cta: "認同的留言「+1」，免費私訊傳送【防封號自主獲客指南】！",
+                aiPrompt: "Cinematic close-up of a digital shield protecting a data network, dark futuristic green aesthetic, 8k resolution, 9:16 vertical ratio",
+                tags: "#防封號 #自主獲客 #商業思維 #去中心化 #LINEVOOM",
+                icon: "fa-shield-alt",
+                bgColor: "from-slate-950 via-slate-900 to-slate-950"
+            },
+            linguistics: {
+                hook: "為什麼「Book」原本居然是「樹皮」的意思？",
+                body: "古英語中 Book 來自日耳曼語的 Beorc（樺樹），因為古人把文字刻在樺樹皮上！點擊比較語言學數據庫，一秒破解 3000 個同源詞根！",
+                cta: "留言「單字」，免費獲取【古英文趣味語源圖譜 PDF】！",
+                aiPrompt: "An ancient giant birch tree with glowing runic letters floating around its bark, magical dark fantasy style, 9:16 vertical aspect ratio",
+                tags: "#比較語言學 #英文單字 #語源趣聞 #知識科普 #學英文",
+                icon: "fa-language",
+                bgColor: "from-purple-950 via-slate-900 to-slate-950"
+            },
+            monetization: {
+                hook: "0 月租！你的知識數據也能自動被動收入？",
+                body: "不用花錢架站！教你用 Gumroad + Ko-fi 建立 $0 固定成本數位店面。把整理好的筆記或程式碼變現，全自動發貨直接到帳！",
+                cta: "留言「變現」，立即獲取 5 分鐘快速開店教學影片！",
+                aiPrompt: "Minimalist glowing digital coins flowing into a sovereign digital vault, dark sleek high-tech aesthetic, 9:16 aspect ratio",
+                tags: "#被動收入 #數據資產 #零成本創業 #獨立創作者 #數位副業",
+                icon: "fa-coins",
+                bgColor: "from-amber-950 via-slate-900 to-slate-950"
+            }
+        };
+
+        let currentCaptionStyle = 'yellow';
+
+        // Load selected template into editor fields
+        function loadTemplate(key) {
+            const tpl = templates[key];
+            if (!tpl) return;
+
+            document.getElementById('script-hook').value = tpl.hook;
+            document.getElementById('script-body').value = tpl.body;
+            document.getElementById('script-cta').value = tpl.cta;
+            document.getElementById('ai-prompt').value = tpl.aiPrompt;
+            document.getElementById('voom-tags').value = tpl.tags;
+
+            // Highlight active button style
+            ['acquisition', 'linguistics', 'monetization'].forEach(id => {
+                const btn = document.getElementById(`tpl-btn-${id}`);
+                if (id === key) {
+                    btn.className = "p-3.5 rounded-xl border text-left transition relative overflow-hidden group bg-slate-950 border-line-500/50 shadow-md shadow-line-500/5";
+                } else {
+                    btn.className = "p-3.5 rounded-xl border border-slate-800 bg-slate-950/60 hover:border-slate-700 text-left transition group";
+                }
+            });
+
+            // Update Phone Video Icon & Background Accent
+            const iconEl = document.getElementById('preview-icon');
+            iconEl.className = `fas ${tpl.icon} text-6xl text-line-500 mb-2 animate-bounce`;
+
+            updatePreview();
+        }
+
+        // Real-time update preview in Smartphone Frame
+        function updatePreview() {
+            const hookText = document.getElementById('script-hook').value || "請輸入前 3 秒鉤子...";
+            const bodyText = document.getElementById('script-body').value || "請輸入 3-12 秒內容...";
+            const ctaText = document.getElementById('script-cta').value || "請輸入 12-15 秒 CTA...";
+            const tagsText = document.getElementById('voom-tags').value || "#LINEVOOM";
+
+            document.getElementById('preview-caption-text').innerText = hookText;
+            document.getElementById('preview-subtext').innerText = ctaText;
+            document.getElementById('preview-bottom-body').innerText = `${bodyText} ${ctaText}`;
+            document.getElementById('preview-bottom-tags').innerText = tagsText;
+        }
+
+        // Toggle Caption Style
+        function setCaptionStyle(style) {
+            const box = document.getElementById('caption-box');
+            currentCaptionStyle = style;
+            if (style === 'yellow') {
+                box.className = "inline-block bg-amber-400 text-slate-950 font-extrabold text-base px-3 py-2 rounded-lg shadow-2xl transform leading-snug border-2 border-slate-950 max-w-[240px]";
+            } else if (style === 'line') {
+                box.className = "inline-block bg-line-500 text-slate-950 font-extrabold text-base px-3 py-2 rounded-lg shadow-2xl transform leading-snug border-2 border-slate-950 max-w-[240px]";
+            } else if (style === 'white') {
+                box.className = "inline-block bg-white text-slate-950 font-extrabold text-base px-3 py-2 rounded-lg shadow-2xl transform leading-snug border-2 border-slate-950 max-w-[240px]";
+            }
+        }
+
+        // Copy to Clipboard Utility
+        function copyToClipboard(type) {
+            let textToCopy = "";
+            if (type === 'full-script') {
+                const hook = document.getElementById('script-hook').value;
+                const body = document.getElementById('script-body').value;
+                const cta = document.getElementById('script-cta').value;
+                const tags = document.getElementById('voom-tags').value;
+                textToCopy = `【LINE VOOM 15秒短影音腳本】\n\n🎯【0-3s 視覺強鉤子】\n${hook}\n\n💡【3-12s 核心價值】\n${body}\n\n💬【12-15s 留言CTA】\n${cta}\n\n🏷️【標籤】\n${tags}`;
+            } else if (type === 'ai-prompt') {
+                textToCopy = document.getElementById('ai-prompt').value;
+            } else if (type === 'voom-tags') {
+                textToCopy = document.getElementById('voom-tags').value;
+            }
+
+            // Executive clipboard copy with fallback
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(textToCopy).then(() => showToast("已成功複製到剪貼簿！"));
+            } else {
+                const textArea = document.createElement("textarea");
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showToast("已成功複製到剪貼簿！");
+                } catch (err) {
+                    showToast("複製失敗，請手動複製");
+                }
+                document.body.removeChild(textArea);
+            }
+        }
+
+        // Toast Notification Display
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').innerText = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 2500);
+        }
+
+        // Simulated Voice Preview (Browser Web Speech Synthesis API)
+        function playTTSPreview() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // Clear previous queue
+                const hook = document.getElementById('script-hook').value;
+                const body = document.getElementById('script-body').value;
+                const cta = document.getElementById('script-cta').value;
+                
+                const utterance = new SpeechSynthesisUtterance(`${hook}。${body}。${cta}`);
+                utterance.lang = 'zh-TW';
+                utterance.rate = 1.15; // Fast pacing for short video
+                window.speechSynthesis.speak(utterance);
+                showToast("🔊 正在模擬語音朗讀中...");
+            } else {
+                showToast("您的瀏覽器不支援語音合成功能");
+            }
+        }
+
+        // Initialize default template on page load
+        window.onload = function() {
+            loadTemplate('acquisition');
+        }
+    </script>
+</body>
+</html>
